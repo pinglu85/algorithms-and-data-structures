@@ -106,22 +106,22 @@ function kmpSearch(txt, pat) {
     // if txt[i] equals pat[j], increase j and i by 1 apparently.
     if (txt[i] === pat[j]) {
       j++;
-    }
-    // while j > 0 and txt[i] does not equals pat[j],
-    // set j to lps[j - 1]
-    while (j > 0 && txt[i] !== pat[j]) {
-      j = lps[j - 1];
+      i++;
     }
 
-    // If j equals pat.length, that means pattern is found, push the
-    // index at which pattern is found to the results, if j > 0,
-    // set j to lps[j - 1].
+    // If j equals the length of pattern, that means pattern is found,
+    // push the index from which pattern is found to the results.
+    // Set j to lps[j - 1].
     if (j === patLen) {
-      results.push(i + 1 - patLen);
-      if (j > 0) j = lps[j - 1];
+      results.push(i - j);
+      j = lps[j - 1];
+    } else if (i < txtLen && txt[i] !== pat[j]) {
+      if (j > 0) {
+        j = lps[j - 1];
+      } else {
+        i++;
+      }
     }
-    // Increase i by 1
-    i++;
   }
   return results.length ? results : 'Pattern not found.';
 }
