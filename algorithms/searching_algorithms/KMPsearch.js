@@ -128,11 +128,10 @@ function kmpSearch(txt, pat) {
 
 // Preprocess the pattern and compute LPS array, so that we can know how many characters
 // we can skip during pattern matching.
-
 // Consider str = 'ababaca'
 // When index = 0, str = 'a', there is no proper prefix that matches a proper suffix; lps = [0]
-// When index = 1, str = 'ab', proper prefix is 'a', proper suffix is 'b', they are not matching;
-// lps = [0, 0]
+// When index = 1, str = 'ab', proper prefix is 'a', proper suffix is 'b', they don't match;
+// lps = [0, 0].
 // When index = 2, str = 'aba', proper prefix: {'a', 'ab'}, proper suffix: {'ba', 'a'},
 // thus 'a' is proper prefix that matches proper suffix, and the length of the longest proper
 // prefix that matches proper suffix is 1; lps = [0, 0, 1].
@@ -146,12 +145,12 @@ function computeLPSArray(pat, patLen) {
   // The lps array stores the length of the longest prefix suffix
   // in the (sub)pattern, from 0 index to the current index.
   // It is used to find out how many characters we can skip and
-  // which index we should start at. For example, the pattern is 'aba',
+  // which index we should start from. For example, the pattern is 'aba',
   // the longest prefix suffix is 'a', the length is 1, thus we can skip
-  // 'a' and start at index 1, namely 'b'.
+  // 'a' and start from index 1, namely 'b'.
   const lps = [0];
 
-  // For i from 1 to patLen - 1
+  // Loop over the pattern from 1th character to the last character.
   let i = 1;
   while (i < patLen) {
     /* 
