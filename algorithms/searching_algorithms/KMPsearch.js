@@ -127,7 +127,7 @@ function kmpSearch(txt, pat) {
 }
 
 // Preprocess the pattern and compute LPS array, so that we can know how many characters
-// to skip during pattern matching.
+// we can skip during pattern matching.
 
 // Consider str = 'ababaca'
 // When index = 0, str = 'a', there is no proper prefix that matches a proper suffix; lps = [0]
