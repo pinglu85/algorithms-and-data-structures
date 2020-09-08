@@ -144,10 +144,10 @@ function computeLPSArray(pat, patLen) {
   // cause lps[0] is always 0.
   // The lps array stores the length of the longest prefix suffix
   // in the (sub)pattern, from 0 index to the current index.
-  // It is used to find out how many characters we can skip and
-  // which index we should start from. For example, the pattern is 'aba',
-  // the longest prefix suffix is 'a', the length is 1, thus we can skip
-  // 'a' and start from index 1, namely 'b'.
+  // It is used to find out how many characters from the beginning of the pattern
+  // we can skip, in other words, which index we should start next match from.
+  // For example, the pattern is 'aba', the longest prefix suffix is 'a',
+  // the length is 1, thus we can skip 'a' and start from index 1, namely 'b'.
   const lps = [0];
 
   // Loop over the pattern from 1th character to the last character.
@@ -176,65 +176,73 @@ function computeLPSArray(pat, patLen) {
       increase len by 1, len = 3, set lps[4] to len, lps = [0, 0, 1, 2, 3]
 
       i = 5, len = 3, lps = [0, 0, 1, 2, 3]
-      str[i] = 'c', str[len] = 'b', we got new prefix 'abab' and suffix 'abac',
-      they do not match, thus we can not increase the longest prefix suffix length 
-      based on the current length which is 3. We need to figure out what should be 
-      the next str[len] we need to compare with str[i]. We may want to increment 
-      it based on the longest prefix suffix with length that is less than current length 3.
-      It is 'a' and the length is 1. We then compare if 'ab' equals 'ac'. They are not. 
-      Then we are going to find out the longest prefix suffix with length that is less than 
-      the length 1. That is 0. We compare 'a' at index 0 with 'c', they don't match; we 
-      push 0 to the lps array. We increase i by 1, i = 6, len = 0, lps = [0, 0, 1, 2, 3, 0].
+      str[i] = 'c', str[len] = 'b', we get new prefix 'abab' and suffix 'abac',
+      they do not match, thus we cannot build a new longest prefix suffix based on the 
+      previous longest prefix suffix 'aba' and increase the length.
+      We need to find out what should be the next character we need to compare with str[i].
+      We check the prefix part of the previous longest prefix suffix 'aba', so as to find out
+      the next match we can start from, in other words, how many characters from the beginning of 
+      the pattern we can skip. 
+            
+          pattern: a b a b a c
+                         ^   ^   
+                        len  i
+                       ^                 
+      The prefix suffix in 'aba' is 'a', therefore we can skip 'a' and 
+      start the next match from 'b'. 
 
-      Consider another example 'abaa', when i = 2, we get the longest prefix suffix 'a', 
-      whose length is 1, lps = [0, 0, 1]. When i = 3, we get 'a'. We are going to find 
-      out if we could increase the length. Since the length of the current longest prefix 
-      suffix is 1, we can skip 'a' and start from index 1, which means we compare 'b' with 'a', 
-      in other words, we check if 'ab' equals 'aa' so as to find out whether we can increase 
-      the current prefix suffix length. 
-          
-          pattern: a b a a 
-                     ^   ^       
-                    len  i
+          pattern: a b a b a c
+                     ^       ^   
+                    len      i
+                       
+      'b' and 'c' don't match, in other words, 'ab' and 'ac' don't match. Therefore, we cannot
+      increase the length of prefix suffix based on the prefix suffix 'a' with length = 1.
+      We check the prefix part of the previous prefix suffix 'a' to find out how many 
+      characters we can skip. 
       
-      They doesn't match, we decrease the len pointer by 1, the len pointer is now at
-      position 0, which is one position before the previous position. In other words, the len 
-      pointer is now at the last character of the previous prefix suffix. Now we need to find 
-      out how many characters we can skip / where can we start from at position 0, which is 0.
-      In other words, we are trying to find out whether we can increase the length of longest
-      prefix suffix based on the prefix suffix whose length is less than the current one which 
-      is 1, which means based on the previous prefix suffix. We compare the character at index 0,
-      which is 'a' with pattern[i] = 'a', they match, we increase len by 1, len = 1.
-      
+          pattern: a b a b a c
+                     ^       ^   
+                    len      i
+                   ^
 
-      Consider another example 'ababeababc', i = 9, len = 4, the current longest prefix
-      suffix is 'abab', lps = [0, 0, 1, 2, 0, 1, 2, 3, 4]. We are going to find out if we 
-      can increase the length of longest prefix suffix. Since len is 4, we compare the character
-      at index 4 which is 'e' with pat[i] which is 'c'. They don't match, we cannot increase 
-      the length based on the current longest prefix suffix 'abab'. 
+      We are already at index 0, we cannot skip any characters, we compare 'a' with 'c',
+      they don't match, we push 0 to the lps array. 
+      To sum it up, if there is a mismatch and the length of previous prefix suffix is not 0, 
+      we recursively check the prefix suffix within the current prefix suffix to find 
+      out how many characters from the beginning of the pattern we can skip, which determines
+      where we can start the next match from, until we find a match or we reach the first 
+      character of the pattern.  
+      You can also understand it like this: although we can not increase the length of 
+      prefix suffix based on the length of previous prefix suffix, we may want to increment 
+      it based on the longest prefix suffix within the current longest prefix suffix.
+  
+      Consider another example 'acacabacacabacacac'.
 
-          patten: a b a b e a b a b c
-                          ^         ^
-                         len        i
+          pattern: a c a c a b a c a c a b a c a c a c
+                                         ^           ^  
+                                        len          i
 
-          lps:    0 0 1 2 0 1 2 3 4
+      Previous longest prefix suffix is 'a c a c a b a c a c a'.
+      There is a mismatch, we need to find out what should be the next character we need to 
+      compare with 'c'. We check the prefix suffix 'a c a c a b a c a c a' and find out 
+      'a c a c a' is the longest prefix suffix, thus we can start the next match from 'b'.
+      In other words, we try to find out if we could build a new prefix suffix based on 
+      'a c a c a':
+ 
+          pattern: a c a c a b a c a c a b a c a c a c
+                             ^                       ^  
+                            len                      i
 
-      We are going to find out whether we can increase the length based on the length of previous 
-      prefix suffix which is 'ab'. We point the len to the last item of the current longest prefix 
-      suffix which is index of 'b' by decreasing len by 1, then we can use this index which is 3 to 
-      look up the lps table, so as to find out the length of previous prefix suffix, namely 'ab'. 
-      That means we can skip 'ab' and start at 'a'. We compare 'a' with 'c', they don't match. 
-      
-          patten: a b a b e a b a b c
-                      ^             ^
-                     len            i
+      'b' and 'c' don't match. We check the prefix suffix  'a c a c a' and get the prefix
+      suffix 'a c a'. So we can skip 'a c a' and start the next match from 'c':
 
-          lps:    0 0 1 2 0 1 2 3 4
+          pattern: a c a c a b a c a c a b a c a c a c
+                         ^                           ^  
+                        len                          i
 
-      We decrease len by 1 again, and we are going to find out whether we can increase the length 
-      based on the length of previous prefix suffix which is 0, there is no prefix suffix in 'ab'.
-      We compare 'a' with 'c', they don't match. That means we don't have prefix suffix at character
-      'c', thus we set lps[9] to 0.    
+      They do match. Thus when pattern = 'a c a c a b a c a c a b a c a c a c', the 
+      longest prefix suffix is 'a c a c' with length 4.                  
+
   */
 
     // If pat[i] is equal to pat[len], increase
@@ -244,22 +252,19 @@ function computeLPSArray(pat, patLen) {
       len++;
       lps[i] = len;
       i++;
-    }
-    // If pat[i] doesn't equal pat[len] and the length of previous
-    // longest prefix suffix is not 0, that means we may increment
-    // the len based on the prefix suffix with length < current length.
-    // Set len to the (len - 1)th item of the lps array, so that we can
-    // find out the length of longest prefix suffix within the current
-    // prefix suffix and compare pat[i] with the character that follows
-    // the prefix suffix. Iterate until either pat[i] equals pat[len]
-    // or len = 0.
-    // If the length of longest prefix suffix is 0 and pat[i] doesn't
-    // equal pat[len], that means we cannot find longest prefix suffix at
-    // index i, we push 0 to the lps array and increase i by 1.
-    else {
+    } else {
+      // If pat[i] doesn't equal pat[len] and the length of previous
+      // longest prefix suffix is not 0, recursively find out the longest prefix
+      // suffix within the previous longest prefix suffix, so as to know
+      // how many characters from the beginning of the pattern we can skip, until
+      // there is a match or the first character of the pattern is reached.
       if (len > 0) {
         len = lps[len - 1];
-      } else {
+      }
+      // If the length of longest prefix suffix is 0 and pat[i] doesn't
+      // equal pat[len], that means we cannot find longest prefix suffix at
+      // index i, we push 0 to the lps array and increase i by 1.
+      else {
         lps[i] = 0;
         i++;
       }
