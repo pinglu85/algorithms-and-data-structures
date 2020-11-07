@@ -42,9 +42,9 @@ function mergeSort(arr) {
     return arr;
   }
   const mid = Math.floor(arr.length / 2);
-  const lowHalf = mergeSort(arr.slice(0, mid));
-  const highHalf = mergeSort(arr.slice(mid, arr.length));
-  return merge(lowHalf, highHalf);
+  const left = mergeSort(arr.slice(0, mid));
+  const right = mergeSort(arr.slice(mid));
+  return merge(left, right);
 }
 
 const arr = [19, 1, 4, 0, 33, 20];
