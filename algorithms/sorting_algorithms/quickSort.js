@@ -11,16 +11,16 @@ function pivot(arr) {
   return swapIndex;
 }
 
-function mergeSort(arr) {
+function quickSort(arr) {
   if (arr.length <= 1) {
     return arr;
   }
   const copied = [...arr];
   const pivotIndex = pivot(copied);
-  const left = mergeSort(copied.slice(0, pivotIndex));
-  const right = mergeSort(copied.slice(pivotIndex + 1));
+  const left = quickSort(copied.slice(0, pivotIndex));
+  const right = quickSort(copied.slice(pivotIndex + 1));
   return left.concat(copied[pivotIndex], right);
 }
 
 const arr = [4, 8, 2, 1, 5, 7, 6, 3];
-console.log(mergeSort(arr));
+console.log(quickSort(arr));
