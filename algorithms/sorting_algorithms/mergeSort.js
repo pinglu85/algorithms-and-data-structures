@@ -1,8 +1,8 @@
 /**
- * Merges two sorted arrays into one.
+ * Merge two sorted arrays into one.
  * @param {number[]} arr1
  * @param {number[]} arr2
- * @returns {number[]} A sorted merged array
+ * @return {number[]} Return a sorted merged array
  */
 function merge(arr1, arr2) {
   const mergedArr = [];
@@ -33,9 +33,9 @@ function merge(arr1, arr2) {
 }
 
 /**
- * Makes a shallow copy of the original array and sorts the copied array of elements.
+ * Make a shallow copy of the original array and sort the copied array of elements.
  * @param {number[]} arr The array to be sorted.
- * @returns {number[]} The sorted shallow copy of the original array.
+ * @return {number[]} Return the sorted shallow copy of the original array.
  */
 function mergeSort(arr) {
   if (arr.length <= 1) {
