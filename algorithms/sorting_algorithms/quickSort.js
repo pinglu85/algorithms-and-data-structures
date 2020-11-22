@@ -3,7 +3,7 @@
  * @param {number[]} arr The array to be sorted.
  * @param {number} lo The starting index of the subarray to be partitioned.
  * @param {number} hi The ending index (inclusive) of the subarray to be partitioned.
- * @returns {number} The index of where the pivot ends up.
+ * @returns {number} Returns the index of where the pivot ends up.
  */
 function partition(arr, lo, hi) {
   const pivot = arr[hi];
