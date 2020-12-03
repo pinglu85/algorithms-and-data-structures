@@ -125,13 +125,13 @@ class SinglyLinkedList {
       return this.unshift(value);
     }
 
-    const previousNode = this.#traverseNodes(index - 1);
-    if (!previousNode) {
+    const prevNode = this.#traverseNodes(index - 1);
+    if (!prevNode) {
       return null;
     }
 
-    const newNode = new Node(value, previousNode.next);
-    previousNode.next = newNode;
+    const newNode = new Node(value, prevNode.next);
+    prevNode.next = newNode;
     return ++this.length;
   }
 
@@ -150,8 +150,8 @@ class SinglyLinkedList {
       return null;
     }
 
-    const previousNode = this.#traverseNodes(index - 1);
-    previousNode.next = removedNode.next;
+    const prevNode = this.#traverseNodes(index - 1);
+    prevNode.next = removedNode.next;
     this.length--;
     return removedNode.value;
   }
@@ -161,18 +161,18 @@ class SinglyLinkedList {
    * @returns {Node} The reversed list.
    */
   reverse() {
-    let previousNode = null;
+    let prevNode = null;
     let currentNode = this.head;
     let nextNode = null;
 
     while (currentNode) {
       nextNode = currentNode.next;
-      currentNode.next = previousNode;
-      previousNode = currentNode;
+      currentNode.next = prevNode;
+      prevNode = currentNode;
       currentNode = nextNode;
     }
 
-    this.head = previousNode;
+    this.head = prevNode;
     return this.head;
   }
 
