@@ -62,7 +62,7 @@ class SinglyLinkedList {
   }
 
   /**
-   * Removes the first node of the list.
+   * Removes the first node from the list.
    * @returns {*} The value of the removed node.
    */
   shift() {
