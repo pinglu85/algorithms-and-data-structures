@@ -12,7 +12,7 @@ class SinglyLinkedList {
   }
 
   /**
-   * Adds a new node to the end of the list.
+   * Adds a node to the end of the list.
    * @param {*} value The value that the new node should contains.
    * @returns {number} The new length of the list.
    */
