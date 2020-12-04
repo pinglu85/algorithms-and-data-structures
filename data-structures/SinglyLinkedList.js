@@ -34,7 +34,7 @@ class SinglyLinkedList {
   }
 
   /**
-   * Removes the last node of the list.
+   * Removes the last node from the list.
    * @returns {*} The value of the removed node.
    */
   pop() {
