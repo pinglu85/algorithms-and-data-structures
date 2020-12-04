@@ -13,7 +13,7 @@ class SinglyLinkedList {
 
   /**
    * Adds a node to the end of the list.
-   * @param {*} value The value that the new node should contains.
+   * @param {*} value The value that the node should contains.
    * @returns {number} The new length of the list.
    */
   push(value) {
@@ -78,7 +78,7 @@ class SinglyLinkedList {
 
   /**
    * Adds a node to the beginning of the list.
-   * @param {*} value The value that the new node should contains.
+   * @param {*} value The value that the node should contains.
    * @returns {number} The new length of the list.
    */
   unshift(value) {
@@ -117,7 +117,7 @@ class SinglyLinkedList {
   /**
    * Adds a node to the list at that index.
    * @param {number} index
-   * @param {*} value The value that the new node should contains.
+   * @param {*} value The value that the node should contains.
    * @returns {number} The new length of the list.
    */
   insert(index, value) {
