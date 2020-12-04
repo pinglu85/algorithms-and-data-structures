@@ -136,7 +136,7 @@ class SinglyLinkedList {
   }
 
   /**
-   * Removes the node at that index.
+   * Removes the node at that index from the list.
    * @param {number} index
    * @returns {*} The value of the removed node.
    */
