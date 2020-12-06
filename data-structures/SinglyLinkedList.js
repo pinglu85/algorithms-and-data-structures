@@ -145,15 +145,15 @@ class SinglyLinkedList {
       return this.shift();
     }
 
-    const removedNode = this.#traverseNodes(index);
-    if (!removedNode) {
+    const node = this.#traverseNodes(index);
+    if (!node) {
       return null;
     }
 
     const prevNode = this.#traverseNodes(index - 1);
-    prevNode.next = removedNode.next;
+    prevNode.next = node.next;
     this.length--;
-    return removedNode.value;
+    return node.value;
   }
 
   /**
