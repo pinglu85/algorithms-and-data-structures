@@ -70,10 +70,10 @@ class SinglyLinkedList {
       return null;
     }
 
-    const currentHead = this.head;
-    this.head = currentHead.next;
+    const currHead = this.head;
+    this.head = currHead.next;
     this.length--;
-    return currentHead.value;
+    return currHead.value;
   }
 
   /**
@@ -162,14 +162,14 @@ class SinglyLinkedList {
    */
   reverse() {
     let prevNode = null;
-    let currentNode = this.head;
+    let currNode = this.head;
     let nextNode = null;
 
-    while (currentNode) {
-      nextNode = currentNode.next;
-      currentNode.next = prevNode;
-      prevNode = currentNode;
-      currentNode = nextNode;
+    while (currNode) {
+      nextNode = currNode.next;
+      currNode.next = prevNode;
+      prevNode = currNode;
+      currNode = nextNode;
     }
 
     this.head = prevNode;
@@ -195,14 +195,19 @@ class SinglyLinkedList {
   }
 
   /**
-   * Prints the value of each node in the list.
+   * Converts the contents of the list into an array.
+   * @returns {*[]} An array of element.
    */
-  print() {
-    let current = this.head;
-    while (current) {
-      console.log(current.value);
-      current = current.next;
+  toArray() {
+    const arr = [];
+    let currNode = this.head;
+
+    while (currNode) {
+      arr.push(currNode.value);
+      currNode = currNode.next;
     }
+
+    return arr;
   }
 
   // Returns the node at index.
@@ -211,14 +216,14 @@ class SinglyLinkedList {
       return null;
     }
 
-    let currentNode = this.head;
+    let currNode = this.head;
     let count = 0;
 
-    while (currentNode) {
+    while (currNode) {
       if (count === index) {
-        return currentNode;
+        return currNode;
       }
-      currentNode = currentNode.next;
+      currNode = currNode.next;
       count++;
     }
 
