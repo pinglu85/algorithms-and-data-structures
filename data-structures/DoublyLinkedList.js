@@ -260,10 +260,3 @@ class DoublyLinkedList {
     return null;
   }
 }
-
-const dll = new DoublyLinkedList();
-dll.push(1);
-dll.push(2);
-dll.push(3);
-dll.push(4);
-console.log(dll.toArray());
