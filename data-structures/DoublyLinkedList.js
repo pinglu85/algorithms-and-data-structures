@@ -201,6 +201,10 @@ class DoublyLinkedList {
     return this.head;
   }
 
+  /**
+   * Reverses the list using Stack.
+   * @returns {Node} The reversed list.
+   */
   reverseWithStack() {
     const stack = this.toArray();
 
