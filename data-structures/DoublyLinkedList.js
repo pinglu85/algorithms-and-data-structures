@@ -181,6 +181,38 @@ class DoublyLinkedList {
   }
 
   /**
+   * Reverses the list.
+   * @returns {Node} The reversed list.
+   */
+  reverse() {
+    let temp;
+    let currNode = this.head;
+    while (currNode) {
+      temp = currNode.prev;
+      currNode.prev = currNode.next;
+      currNode.next = temp;
+      currNode = currNode.prev;
+    }
+
+    if (temp) {
+      this.tail = this.head;
+      this.head = temp.prev;
+    }
+    return this.head;
+  }
+
+  reverseWithStack() {
+    const stack = this.toArray();
+
+    let currNode = this.head;
+    while (currNode) {
+      currNode.value = stack.pop();
+      currNode = currNode.next;
+    }
+    return this.head;
+  }
+
+  /**
    * Converts the contents of the list into an array.
    * @returns {*[]} An array of element.
    */
