@@ -15,7 +15,7 @@ class Stack {
   }
 
   /**
-   * Adds an element to top of the stack
+   * Adds an element to top of the stack.
    * @param {*} value The element to be added.
    * @returns {number} The new length of the stack.
    */
