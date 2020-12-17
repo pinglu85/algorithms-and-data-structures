@@ -1,84 +1,71 @@
-class Stack {
-  constructor() {
-    this.items = [];
-    this.count = 0;
-  }
-
-  // Add element to top of stack
-  push(element) {
-    this.items[this.count] = element;
-    console.log(`${element} added to ${this.count}`);
-    this.count++;
-    return this.count - 1;
-  }
-
-  // Return and remove top element in stack
-  // Return undefined if stack is empty
-  pop() {
-    if (this.count === 0) return undefined;
-    let deleteItem = this.items[this.count - 1];
-    this.count--;
-    console.log(`${deleteItem} removed`);
-    return deleteItem;
-  }
-
-  // Check top element in stack
-  peek() {
-    console.log(`Top element is ${this.items[this.count - 1]}`);
-    return this.items[this.count - 1];
-  }
-
-  // Check if stack is empty
-  isEmpty() {
-    console.log(this.count === 0 ? 'Stack is empty' : 'Stack is NOT empty');
-    return this.count === 0;
-  }
-
-  // Check size of stack
-  size() {
-    console.log(`${this.count} elements in stack`);
-    return this.count;
-  }
-
-  // Print elements in stack
-  print() {
-    let str = '';
-    for (let i = 0; i < this.count; i++) {
-      str += this.items[i] + ' ';
-    }
-    console.log(str);
-    return str;
-  }
-
-  // Clear stack
-  clear() {
-    this.items = [];
-    this.count = 0;
-    console.log('Stack cleared..');
-    return this.items;
+class Node {
+  constructor(value, next = null) {
+    this.value = value;
+    this.next = next;
   }
 }
 
-const stack = new Stack();
+class Stack {
+  #tail;
+  #length;
 
-stack.isEmpty();
+  constructor() {
+    this.#tail = null;
+    this.#length = 0;
+  }
 
-stack.push(100);
-stack.push(200);
+  /**
+   * Adds an element to top of the stack
+   * @param {*} value The element to be added.
+   * @returns {number} The new length of the stack.
+   */
+  push(value) {
+    const node = new Node(value, this.#tail);
+    this.#tail = node;
+    return ++this.#length;
+  }
 
-stack.peek();
+  /**
+   * Removes the element at the top of the stack.
+   * @returns {*} The popped element.
+   */
+  pop() {
+    if (this.isEmpty()) {
+      return null;
+    }
 
-stack.push(300);
+    const node = this.#tail;
+    this.#tail = node.next;
+    node.next = null;
+    this.#length--;
+    return node.value;
+  }
 
-stack.print();
+  /**
+   * Returns the element at the top of the stack.
+   * @returns {*} The element at the top of the stack.
+   */
+  peek() {
+    if (this.isEmpty()) {
+      return null;
+    }
 
-stack.pop();
-stack.pop();
+    return this.#tail.value;
+  }
 
-stack.clear();
+  /**
+   * Checks if the stack is empty.
+   * @returns {boolean} Whether the stack is empty.
+   */
+  isEmpty() {
+    return this.#length === 0;
+  }
 
-stack.print();
-
-stack.size();
-
-stack.isEmpty();
+  /**
+   * Gets the number of elements in the stack.
+   * @returns {number} The number of elements in the stack.
+   */
+  get length() {
+    return this.#length;
+  }
+}
