@@ -1,4 +1,19 @@
 /**
+ * Makes a shallow copy of the original array and sorts the copied array of elements.
+ * @param {number[]} arr The array to be sorted.
+ * @returns {number[]} Returns the sorted shallow copy of the original array.
+ */
+function mergeSort(arr) {
+  if (arr.length <= 1) {
+    return arr;
+  }
+  const mid = Math.floor(arr.length / 2);
+  const left = mergeSort(arr.slice(0, mid));
+  const right = mergeSort(arr.slice(mid));
+  return merge(left, right);
+}
+
+/**
  * Merges two sorted arrays into one.
  * @param {number[]} arr1
  * @param {number[]} arr2
@@ -30,21 +45,6 @@ function merge(arr1, arr2) {
   }
 
   return mergedArr;
-}
-
-/**
- * Makes a shallow copy of the original array and sorts the copied array of elements.
- * @param {number[]} arr The array to be sorted.
- * @returns {number[]} Returns the sorted shallow copy of the original array.
- */
-function mergeSort(arr) {
-  if (arr.length <= 1) {
-    return arr;
-  }
-  const mid = Math.floor(arr.length / 2);
-  const left = mergeSort(arr.slice(0, mid));
-  const right = mergeSort(arr.slice(mid));
-  return merge(left, right);
 }
 
 const arr = [19, 1, 4, 0, 33, 20];

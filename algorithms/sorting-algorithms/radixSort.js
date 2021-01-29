@@ -1,4 +1,19 @@
 /**
+ * Sorts an array of elements in place.
+ * @param {number[]} arr The array to be sorted.
+ */
+function radixSort(arr) {
+  const max = Math.max(...arr);
+
+  let place = 1;
+
+  while (Math.floor(max / place) > 0) {
+    countingSort(arr, place);
+    place *= 10;
+  }
+}
+
+/**
  * Sorts an array of elements according to significant places.
  * @param {*} arr The array to be sorted.
  * @param {*} place The significant place.
@@ -43,21 +58,6 @@ function countingSort(arr, place) {
   // so that original array now contains sorted numbers.
   for (let i = 0; i < arrLen; i++) {
     arr[i] = output[i];
-  }
-}
-
-/**
- * Sorts an array of elements in place.
- * @param {number[]} arr The array to be sorted.
- */
-function radixSort(arr) {
-  const max = Math.max(...arr);
-
-  let place = 1;
-
-  while (Math.floor(max / place) > 0) {
-    countingSort(arr, place);
-    place *= 10;
   }
 }
 
