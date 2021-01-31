@@ -144,3 +144,5 @@ class BinarySearchTree {
     return node;
   }
 }
+
+module.exports = BinarySearchTree;
