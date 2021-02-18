@@ -178,20 +178,10 @@ class SinglyLinkedList {
 
   /**
    * Reverses the list recursively.
-   * @param {Node} [head=the list] The list to be reversed.
    * @returns {Node} The reversed list.
    */
-  recursiveReverse(head = this.head) {
-    if (!head || !head.next) {
-      return head;
-    }
-    let rest = this.recursiveReverse(head.next);
-
-    // Put the first node at the end.
-    head.next.next = head;
-    head.next = null;
-
-    return rest;
+  recursiveReverse() {
+    return this.#recursiveReverseImpl(this.head);
   }
 
   /**
@@ -208,6 +198,19 @@ class SinglyLinkedList {
     }
 
     return arr;
+  }
+
+  // Reverses the list recursively.
+  #recursiveReverseImpl(node) {
+    if (!node || !node.next) {
+      return node;
+    }
+
+    const rest = node.next;
+    const newHead = this.#recursiveReverseImpl(rest);
+    rest.next = node;
+    node.next = null;
+    return newHead;
   }
 
   // Returns the node at index.
