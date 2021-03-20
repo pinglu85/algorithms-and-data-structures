@@ -21,13 +21,19 @@ class Graph {
    * @returns {Graph} The graph instance.
    */
   removeVertex(vertex) {
-    const incoming = this.vertices.get(vertex).from;
-    if (!incoming) {
+    const neighbors = this.vertices.get(vertex);
+    if (!neighbors) {
       return this;
     }
 
+    const { from: incoming, to: outgoing } = neighbors;
+
     incoming.forEach((incomingVertex) => {
       this.removeEdge(incomingVertex, vertex);
+    });
+
+    outgoing.forEach((_, outgoingVertex) => {
+      this.removeEdge(vertex, outgoingVertex);
     });
 
     this.vertices.delete(vertex);
