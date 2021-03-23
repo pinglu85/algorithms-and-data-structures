@@ -24,10 +24,9 @@ function breadthFirstSearch(graph, source) {
     const neighbors = graph[node];
 
     for (const neighbor of neighbors) {
-      if (visited.has(neighbor)) {
-        continue;
+      if (!visited.has(neighbor)) {
+        queue.enqueue(neighbor);
       }
-      queue.enqueue(neighbor);
     }
   }
 
