@@ -40,6 +40,10 @@ function depthFirstSearch(graph, source) {
  * @returns {*[]} A DFS-traversed order of nodes.
  */
 function recursiveDepthFirstSearch(graph, source) {
+  if (Object.keys(graph).length === 0) {
+    return [];
+  }
+
   const visited = new Set();
 
   const recursiveDFSImpl = (graph, node) => {
