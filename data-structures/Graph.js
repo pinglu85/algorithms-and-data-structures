@@ -76,3 +76,5 @@ class Graph {
     return this;
   }
 }
+
+module.exports = Graph;
