@@ -16,9 +16,9 @@ const Graph = require('../../data-structures/Graph');
 function dijkstrasAlgorithm(graph, source, target) {
   const dijkstrasInfo = new Map();
 
-  graph.forEach((_, vertex) => {
-    const distanceToSource = vertex === source ? 0 : Infinity;
-    dijkstrasInfo.set(vertex, { distanceToSource, parent: null });
+  graph.forEach((_, node) => {
+    const distanceToSource = node === source ? 0 : Infinity;
+    dijkstrasInfo.set(node, { distanceToSource, parent: null });
   });
 
   const pq = new PriorityQueue(
@@ -26,26 +26,26 @@ function dijkstrasAlgorithm(graph, source, target) {
   );
 
   pq.insert({
-    vertex: source,
+    node: source,
     distanceToSource: 0,
   });
 
   const visited = new Set();
 
   while (pq.size() > 0) {
-    const { vertex, distanceToSource } = pq.pull();
+    const { node, distanceToSource } = pq.pull();
 
-    if (vertex === target) {
+    if (node === target) {
       return constructPath(dijkstrasInfo, target);
     }
 
-    if (visited.has(vertex)) {
+    if (visited.has(node)) {
       continue;
     }
 
-    visited.add(vertex);
+    visited.add(node);
 
-    const neighbors = graph.get(vertex).to;
+    const neighbors = graph.get(node).to;
 
     neighbors.forEach((weight, neighbor) => {
       if (visited.has(neighbor)) {
@@ -58,9 +58,9 @@ function dijkstrasAlgorithm(graph, source, target) {
       if (newDistanceToSource < oldDistanceToSource) {
         dijkstrasInfo.set(neighbor, {
           distanceToSource: newDistanceToSource,
-          parent: vertex,
+          parent: node,
         });
-        pq.insert({ vertex: neighbor, distanceToSource: newDistanceToSource });
+        pq.insert({ node: neighbor, distanceToSource: newDistanceToSource });
       }
     });
   }
@@ -71,12 +71,12 @@ function dijkstrasAlgorithm(graph, source, target) {
 // Constructs the shortest path between the source node and the target node.
 function constructPath(dijkstrasInfo, target) {
   const path = [];
-  let vertex = target;
+  let node = target;
 
-  while (vertex) {
-    path.push(vertex);
-    const { parent } = dijkstrasInfo.get(vertex);
-    vertex = parent;
+  while (node) {
+    path.push(node);
+    const { parent } = dijkstrasInfo.get(node);
+    node = parent;
   }
 
   return path.reverse();
