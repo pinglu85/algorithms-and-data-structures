@@ -91,5 +91,5 @@ graph.addEdge('C', 'F', 6);
 graph.addEdge('C', 'E', 1);
 graph.addEdge('D', 'F', 2);
 graph.addEdge('E', 'F', 3);
-const path = dijkstrasAlgorithm(graph.vertices, 'A', 'F');
+const path = dijkstrasAlgorithm(graph.nodes, 'A', 'F');
 console.log(path);
