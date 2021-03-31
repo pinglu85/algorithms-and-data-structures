@@ -1,6 +1,18 @@
 const PriorityQueue = require('../../data-structures/PriorityQueue');
 const Graph = require('../../data-structures/Graph');
 
+/**
+ * Finds the shortest path between the given source node and
+ * the given target node in a graph.
+ * @param {Map} graph A graph represented with adjacency list.
+ * Key of the map holds a node and value is an object which
+ * contains a set of incoming nodes and a map of outgoing nodes.
+ * Key of the outgoing nodes map holds a outgoing node and value
+ * holds the weight of the edge.
+ * @param {*} source The starting node.
+ * @param {*} target The target node.
+ * @returns {*[]} The shortest path between the source node and the target node.
+ */
 function dijkstrasAlgorithm(graph, source, target) {
   const dijkstrasInfo = new Map();
 
@@ -56,6 +68,7 @@ function dijkstrasAlgorithm(graph, source, target) {
   return [];
 }
 
+// Constructs the shortest path between the source node and the target node.
 function constructPath(dijkstrasInfo, target) {
   const path = [];
   let vertex = target;
